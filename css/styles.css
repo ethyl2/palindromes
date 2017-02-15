@@ -1,0 +1,44 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  color: #5D4037;
+  width: 65%;
+  margin: auto;
+}
+
+#moom {
+  float: left;
+  max-width: 20%;
+  padding: 1em;
+}
+
+#tacocat {
+  float: right;
+  max-width: 20%;
+  padding: 1em;
+}
+
+.definition {
+  font-style: italic;
+  font-size: 1.25em;
+}
+
+.form-container {
+  background-color: #D7CCC8;
+  border-radius: 1em;
+  padding: 0.75em;
+  margin-bottom: 1em;
+}
+
+.response {
+  background-color: #3E2723;
+  color: #EFEBE9;
+  border-radius: 1em;
+  padding: 1em;
+}
+
+#myCanvas {
+  width: 200px;
+  height: 100px;
+  border:1px solid #000000;
+}

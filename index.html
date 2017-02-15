@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Palindrome Checker</title>
+    <!-- Favicon is from http://www.freefavicon.com/freefavicons/objects/iconinfo/lattice-optic-illusion-152-204321.html-->
+    <link rel="icon" type="image/png" href="img/lattice.png">
+    <link href="css/styles.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header>
+      <a target="_blank" href="https://www.constantinosorphanides.com/817/check-string-palindrome-c-sharp-example-dot-net/">
+        <img id="moom" src="img/moom_small.jpg" alt="palindrome cow cartoon"></a>
+      <a target="_blank" href="http://shop.theoatmeal.com/products/tacocat-shirt">
+        <img id="tacocat" src="img/tacocat_art_small.png" alt="tacocat shirt"></a>
+      <h1>Palindrome Checker</h1>
+    </header>
+
+    <section class="definition">
+      <p>A palindrome is a word, phrase, or sequence that reads the same backward
+        as forward.</p>
+    </section>
+
+    <section id="form-container" class="form-container">
+      <h2>Enter your potential palindrome here:</h2>
+      <input type="text" class="potential-palindrome" value="" onkeypress="checkForEnter()"></input>
+      <button class="button" onclick="getPotentialPalindrome()">Submit</button>
+    </section>
+
+    <section class="response">
+      <h2>Is it a palindrome?</h2>
+      <h3 class="answer"></h3>
+      <canvas id="myCanvas"></canvas>
+    </section>
+
+  <script>
+  function checkForEnter(e) {
+    if (!e) e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '13'){
+      getPotentialPalindrome();
+    }
+  }
+
+  function getPotentialPalindrome() {
+    var potentialPalindrome = document.getElementsByClassName("potential-palindrome")[0].value;
+    //get rid of punctuation
+    potentialPalindrome = potentialPalindrome.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    //get rid of spaces
+    potentialPalindrome = potentialPalindrome.replace(/\s+/g, '');
+    potentialPalindrome = potentialPalindrome.toLowerCase();
+    console.log(potentialPalindrome);
+    var result = checkPotentialPalindrome(potentialPalindrome);
+    console.log(result);
+    var responseText;
+    if (result) {
+        responseText = "Why, yes, it is!";
+      } else {
+        responseText = "No, unfortunately, it is not.";
+      }
+    var answerDisplay = document.getElementsByClassName("answer")[0];
+    answerDisplay.textContent = responseText;
+    displayResult(potentialPalindrome, result);
+  }
+
+  function checkPotentialPalindrome(word) {
+    if (word === "") {
+      return true;
+    } else {
+      if (word[0] == word[word.length - 1]) {
+        return checkPotentialPalindrome(word.slice(1, -1));
+      } else {
+        return false;
+      }
+    }
+  }
+
+  function displayResult(word, answer) {
+
+    // setting up the canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = "center";
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "#64DD17";
+
+    //chop the word into pieces
+    var segmentLength = word.length/2;
+    var middleLetter = "";
+    var firstHalf = word.slice(0, segmentLength);
+    if (word.length % 2 === 1) {
+      middleLetter = word.slice(segmentLength, segmentLength + 1);
+      var lastHalf = word.slice(segmentLength + 1);
+    } else {
+      var lastHalf = word.slice(segmentLength);
+    }
+
+    // display the word in its pieces
+    ctx.fillText(firstHalf, 30, canvas.height/2);
+    ctx.fillStyle = "#F57F17";
+    ctx.fillRect(canvas.width/2 ,0 , 5, canvas.height);
+    ctx.fillStyle = "#EFEBE9";
+    ctx.fillText(middleLetter, canvas.width/2, canvas.height/2);
+    ctx.fillStyle = "#FDD835";
+    ctx.fillText(lastHalf, canvas.width - segmentLength - 30, canvas.height/2);
+
+    // if the word is not a palindrome, make an x across the displayResult
+    if (!answer) {
+      ctx.strokeStyle = "#F44336";
+      ctx.lineWidth = 8;
+      ctx.moveTo(0,0);
+      ctx.lineTo(canvas.width, canvas.height);
+      ctx.stroke();
+      ctx.moveTo(canvas.width, 0);
+      ctx.lineTo(0, canvas.height);
+      ctx.stroke();
+    }
+    }
+
+
+
+  </script>
+  </body>
+  </html>
